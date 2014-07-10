@@ -163,7 +163,7 @@ class acf_field_cf7 extends acf_field {
 		} 
 		
 		// Begin HTML select field
-		echo '<select id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" ' . $multiple . ' >';
+		echo '<select id="' . $field['name'] . '" class="' . $field['class'] . ' cf7-select" name="' . $field['name'] . '" ' . $multiple . ' >';
 		
 		// Add null value as required
 		if($field['allow_null'] == '1'){
