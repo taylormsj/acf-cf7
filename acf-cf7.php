@@ -4,7 +4,7 @@
 Plugin Name: Advanced Custom Fields: Contact Form 7
 Plugin URI: https://github.com/taylormsj/acf-cf7
 Description: Add one or more contact forms to an advanced custom field 
-Version: 1.0.0
+Version: 1.0.1
 Author: Taylor Mitchell-St.Joseph
 Author URI: http://taylormitchellstjoseph.co.uk
 License: GPLv2 or later

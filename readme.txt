@@ -2,7 +2,7 @@
 Contributors: Taylor Mitchell-St.Joseph
 Tags: acf, contact form 7, advanced custom fields
 Requires at least: 3.5
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,6 +33,9 @@ This ACF field type is compatible with:
 4. Please refer to the description for more info regarding the field type settings
 
 == Changelog ==
+
+= 1.0.1 =
+* Added select2 compatibility
 
 = 1.0.0 =
 * Initial Release for ACF 5 compatibility
