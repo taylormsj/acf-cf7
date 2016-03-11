@@ -260,7 +260,7 @@ class acf_field_cf7 extends acf_field {
 	?>
 		<script>
 			jQuery(document).ready(function($) { 
-				$(".cf7-select").select2({
+				$(".cf7-select input").select2({
 					width: '100%'
 				}); 
 			});
