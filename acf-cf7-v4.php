@@ -1,12 +1,12 @@
 <?php
 
 class acf_field_cf7 extends acf_field {
-	
+
 	// vars
 	var $settings, // will hold info such as dir / path
 		$defaults; // will hold default field options
-		
-		
+
+
 	/*
 	*  __construct
 	*
@@ -15,7 +15,7 @@ class acf_field_cf7 extends acf_field {
 	*  @since	3.6
 	*  @date	23/01/13
 	*/
-	
+
 	function __construct()
 	{
 		// vars
@@ -27,12 +27,12 @@ class acf_field_cf7 extends acf_field {
 			'multiple'		=> 0,
 			'disable'		=> ''
 		);
-		
-		
+
+
 		// do not delete!
     	parent::__construct();
-    	
-    	
+
+
     	// settings
 		$this->settings = array(
 			'path' => apply_filters('acf/helpers/get_path', __FILE__),
@@ -41,8 +41,8 @@ class acf_field_cf7 extends acf_field {
 		);
 
 	}
-	
-	
+
+
 	/*
 	*  create_options()
 	*
@@ -55,7 +55,7 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @param	$field	- an array holding all the field's data
 	*/
-	
+
 	function create_options( $field )
 	{
 		// vars
@@ -66,7 +66,7 @@ class acf_field_cf7 extends acf_field {
 		  	'choices'   =>  '',
 		  	'disable'   => ''
 		);
-		
+
 		$field = array_merge($defaults, $field);
 		$key = $field['name'];
 		?>
@@ -75,7 +75,7 @@ class acf_field_cf7 extends acf_field {
 	        	<label><?php _e("Allow Null?",'acf'); ?></label>
 	      	</td>
 	      	<td>
-			    <?php 
+			    <?php
 			    do_action('acf/create_field', array(
 			      	'type'  =>  'radio',
 			      	'name'  =>  'fields['.$key.'][allow_null]',
@@ -94,7 +94,7 @@ class acf_field_cf7 extends acf_field {
 	        	<label><?php _e("Select Multiple?",'acf'); ?></label>
 	      	</td>
 	      	<td>
-			    <?php 
+			    <?php
 			    do_action('acf/create_field', array(
 			      	'type'  =>  'radio',
 			      	'name'  =>  'fields['.$key.'][multiple]',
@@ -114,16 +114,16 @@ class acf_field_cf7 extends acf_field {
 	        	<p class="description"><?php _e("User will not be able to select these forms",'acf'); ?></p>
 	      	</td>
 	      	<td>
-			    <?php 
+			    <?php
 			    //Get form names
-			    $forms = get_posts(array('post_type' => 'wpcf7_contact_form', 'orderby' => 'id', 'order' => 'ASC', 'posts_per_page' => -1, 'numberposts' => -1));  
+			    $forms = get_posts(array('post_type' => 'wpcf7_contact_form', 'orderby' => 'id', 'order' => 'ASC', 'posts_per_page' => -1, 'numberposts' => -1));
 			    $choices = array();
 			    $choices[0] = '---';
 			    $k = 1;
 			    foreach($forms as $f){
 			        $choices[$k] = $f->post_title;
 			        $k++;
-			    } 
+			    }
 			    do_action('acf/create_field', array(
 			      	'type'  =>  'select',
 			      	'name'  =>  'fields['.$key.'][disable]',
@@ -138,8 +138,8 @@ class acf_field_cf7 extends acf_field {
 	  	</tr>
 		<?php
 	}
-	
-	
+
+
 	/*
 	*  create_field()
 	*
@@ -151,36 +151,36 @@ class acf_field_cf7 extends acf_field {
 	*  @since	3.6
 	*  @date	23/01/13
 	*/
-	
+
 	function create_field( $field )
 	{
 		$field['multiple'] = isset($field['multiple']) ? $field['multiple'] : false;
 		$field['disable'] = isset($field['disable']) ? $field['disable'] : false;
-		    
+
 		// Add multiple select functionality as required
 		$multiple = '';
 		if($field['multiple'] == '1'){
 		    $multiple = ' multiple="multiple" size="5" ';
 		    $field['name'] .= '[]';
-		} 
-		
+		}
+
 		// Begin HTML select field
 		echo '<select id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" ' . $multiple . ' >';
-		
+
 		// Add null value as required
 		if($field['allow_null'] == '1'){
 		    echo '<option value="null"> - Select - </option>';
 		}
-		
+
 
 		// Display all contact form 7 forms
-		$forms = get_posts(array('post_type' => 'wpcf7_contact_form', 'orderby' => 'id', 'order' => 'ASC', 'posts_per_page' => -1, 'numberposts' => -1));       
-		if($forms){  
+		$forms = get_posts(array('post_type' => 'wpcf7_contact_form', 'orderby' => 'id', 'order' => 'ASC', 'posts_per_page' => -1, 'numberposts' => -1));
+		if($forms){
 		    foreach($forms as $k => $form){
 		      	$key = $form->ID;
-		      	$value = $form->post_title; 
+		      	$value = $form->post_title;
 		      	$selected = '';
-		    
+
 		      	// Mark form as selected as required
 		      	if(is_array($field['value'])){
 		        	// If the value is an array (multiple select), loop through values and check if it is selected
@@ -201,13 +201,13 @@ class acf_field_cf7 extends acf_field {
 		          	}
 		      	}
 		      	echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
-		    } 
-		}       
+		    }
+		}
 
 		echo '</select>';
 	}
-	
-	
+
+
 	/*
 	*  input_admin_enqueue_scripts()
 	*
@@ -224,27 +224,27 @@ class acf_field_cf7 extends acf_field {
 	function input_admin_enqueue_scripts()
 	{
 		// Note: This function can be removed if not used
-		
-		
+
+
 		// register ACF scripts
 		wp_register_script( 'acf-input-cf7', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
-		wp_register_style( 'acf-input-cf7', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
-		
-		
+		wp_register_style( 'acf-input-cf7', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] );
+
+
 		// scripts
 		wp_enqueue_script(array(
-			'acf-input-cf7',	
+			'acf-input-cf7',
 		));
 
 		// styles
 		wp_enqueue_style(array(
-			'acf-input-cf7',	
+			'acf-input-cf7',
 		));
-		
-		
+
+
 	}
 */
-	
+
 	/*
 	*  input_admin_head()
 	*
@@ -261,8 +261,8 @@ class acf_field_cf7 extends acf_field {
 	{
 		// Note: This function can be removed if not used
 	}
-	
-	
+
+
 	/*
 	*  field_group_admin_enqueue_scripts()
 	*
@@ -280,7 +280,7 @@ class acf_field_cf7 extends acf_field {
 		// Note: This function can be removed if not used
 	}
 
-	
+
 	/*
 	*  field_group_admin_head()
 	*
@@ -314,14 +314,14 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @return	$value - the value to be saved in the database
 	*/
-	
+
 	function load_value( $value, $post_id, $field )
 	{
 		// Note: This function can be removed if not used
 		return $value;
 	}
-	
-	
+
+
 	/*
 	*  update_value()
 	*
@@ -337,14 +337,14 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @return	$value - the modified value
 	*/
-	
+
 	function update_value( $value, $post_id, $field )
 	{
 		// Note: This function can be removed if not used
 		return $value;
 	}
-	
-	
+
+
 	/*
 	*  format_value()
 	*
@@ -360,22 +360,22 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @return	$value	- the modified value
 	*/
-	
+
 	function format_value( $value, $post_id, $field )
 	{
 		// defaults?
 		/*
 		$field = array_merge($this->defaults, $field);
 		*/
-		
+
 		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
+
+
 		// Note: This function can be removed if not used
 		return $value;
 	}
-	
-	
+
+
 	/*
 	*  format_value_for_api()
 	*
@@ -391,31 +391,31 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @return	$value	- the modified value
 	*/
-	
+
 	function format_value_for_api( $value, $post_id, $field )
 	{
 		if(!$value || $value == 'null'){
 		    return false;
 		}
-		
-		//If there are multiple forms, construct and return an array of form markup
-		if(is_array($value)){
-		    foreach($value as $k => $v){
-		      	$form = get_post($v);
-		      	$f = do_shortcode('[contact-form-7 id="'.$form->ID.'" title="'.$form->post_title.'"]');
-		      	$value[$k] = array();
-		      	$value[$k] = $f;
-		    }
-		//Else return single form markup
-		}else{
-		    $form = get_post($value);
-		    $value = do_shortcode('[contact-form-7 id="'.$form->ID.'" title="'.$form->post_title.'"]');
-		}
+
+    if(!is_array($value)){
+      $value = (array) $value;
+    }
+
+    foreach($value as $k => $v){
+      	$form = get_post($v);
+      	$f = do_shortcode('[contact-form-7 id="'.$form->ID.'" title="'.$form->post_title.'"]');
+      	$value[$k] = $f;
+    }
+
+    if(count($value) === 1){
+      $value = $value[0];
+    }
 
 		return $value;
 	}
-	
-	
+
+
 	/*
 	*  load_field()
 	*
@@ -429,14 +429,14 @@ class acf_field_cf7 extends acf_field {
 	*
 	*  @return	$field - the field array holding all the field options
 	*/
-	
+
 	function load_field( $field )
 	{
 		// Note: This function can be removed if not used
 		return $field;
 	}
-	
-	
+
+
 	/*
 	*  update_field()
 	*
@@ -458,7 +458,7 @@ class acf_field_cf7 extends acf_field {
 		return $field;
 	}
 
-	
+
 }
 
 
