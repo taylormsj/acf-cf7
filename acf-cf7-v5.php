@@ -264,6 +264,12 @@ class acf_field_cf7 extends acf_field {
 					width: '100%'
 				}); 
 			});
+                	acf.add_action('append', function ($el) {
+                  		$el.find('.select2').remove();
+                    		$el.find(".cf7-select").select2({
+                        		width: '100%'
+                    		});
+                	});
 		</script>
 	<?php	
 	}
